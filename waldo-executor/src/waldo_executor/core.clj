@@ -2,41 +2,34 @@
   (:require [waldo-executor.utils.messages :as msg])
   (:gen-class))
 
-(defn file->vector
-  "Converts the contents of a file into a vector of information."
+(defn file->list
+  "Converts the contents of a file into a list of information."
   [file]
-  (into []
-    (read-string (str \( (slurp file) \)))))
+    (read-string (str \( (slurp file) \))))
 
-(defn import-functions
-  "Takes a list of specially formatted waldo code and imports all functions."
-  [waldo-list]
-  (loop [number-functions (count waldo-list)
-         index 4]
-    (when (< index number-functions)
-      (eval (waldo-list index))
-      (recur number-functions (inc index)))))
+(defn execute-list
+  "Takes a list of specially formatted waldo code and executes each segment"
+  [code-list]
+  (if (empty? code-list)
+    true
+    (do
+      (eval (first code-list))
+      (recur (rest code-list)))))
 
-
-(defn import-information
-  "Takes a list of specically formatted waldo code and returns all data stored."
-  [waldo-list]
-  (let [info [(eval (waldo-list 0))   ; config
-              (eval (waldo-list 1))   ; data
-              (eval (waldo-list 2))   ; function map
-              (eval (waldo-list 3))]] ; trail
-    (import-functions waldo-list)
-    info))
+(defn hand-briefcase
+  "Takes a list of specically formatted waldo code and returns the briefcase"
+  [code-list]
+  (eval (first code-list)))
 
 (defn logic
   "Holds the sequence of events that will take place in the executor."
   [& args]
-  (let [waldo-list (file->vector "/tmp/test.clj")
-        info (import-information waldo-list)
-        config (info 0)
-        data (info 1)
-        fmap (info 2)
-        trail (info 3)]
+  (let [code-list (file->list "/tmp/test.clj")
+        info (hand-briefcase waldo-list)
+        config (:config info)
+        data (:data info)
+        fmap (:fmap info)
+        trail (:trail info)]
 
     (msg/data 'info info)
     (msg/data 'config config)
@@ -44,6 +37,7 @@
     (msg/data 'fmap fmap)
     (msg/data 'trail trail)
 
+    (execute-list code-list)
     ((:main fmap))))
 
 
