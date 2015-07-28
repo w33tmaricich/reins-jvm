@@ -25,7 +25,7 @@
   "Holds the sequence of events that will take place in the executor."
   [& args]
   (let [code-list (file->list "/tmp/test.clj")
-        info (hand-briefcase waldo-list)
+        info (hand-briefcase code-list)
         config (:config info)
         data (:data info)
         fmap (:fmap info)
@@ -38,7 +38,7 @@
     (msg/data 'trail trail)
 
     (execute-list code-list)
-    ((:main fmap))))
+    ((:do-next fmap))))
 
 
 (defn -main
