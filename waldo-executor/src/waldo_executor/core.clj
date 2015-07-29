@@ -21,9 +21,21 @@
                                                                   (:group-membership spread-con)))
         grp-retrieve (spread/join-group retrieve-group connection)]
     (msg/suc "Waiting for code...")
-    (loop [code (spread/pull connection)] ; Retrieve code to be run from spread
+    (loop [message (spread/pull connection)] ; Retrieve code to be run from spread
       (try
-        (execute-list (string->list code))
+        (do
+          ; Get the briefcase
+          (msg/suc "Retrieved briefcase: " message)
+          (def briefcase (hand-briefcase message))
+          (msg/data 'briefcase-code (:code briefcase))
+          ; Execute the code
+          (execute-list (string->list (:code briefcase)))
+          ; Run the next relevant function
+          ;(def do-next (read-string (:do-next (:fnmap briefcase))))
+          (def do-next (string->fn (:do-next (:fnmap briefcase))))
+          (do-next))
+          ;(execute-list (string->list code))
+
         (catch Exception e (do
                              (msg/err (str "Unable to execute code: " (.getMessage e)))
                              (spread/disconnect connection))))

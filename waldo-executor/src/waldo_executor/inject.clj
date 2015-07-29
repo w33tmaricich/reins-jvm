@@ -6,6 +6,11 @@
   [s]
   (read-string (str \( s \))))
 
+(defn string->fn
+  "Converts a string to a function. Usially used on a string declare."
+  [s]
+  (eval (first (string->list s))))
+
 (defn file->list
   "Converts the contents of a file into a list of information."
   [file]
@@ -22,5 +27,5 @@
 
 (defn hand-briefcase
   "Takes a list of specically formatted waldo code and returns the briefcase"
-  [code-list]
-  (eval (first code-list)))
+  [message]
+  (eval (first (string->list message))))
