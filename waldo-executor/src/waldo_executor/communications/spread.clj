@@ -15,6 +15,15 @@
   [ip]
   (InetAddress/getByName (str ip)))
 
+(defn connection-information
+  "Creates a map of connection information based upon the given values."
+  [ip port private-name priority group-membership]
+  {:inet-address (create-inet-address ip)
+   :port port
+   :private-name private-name
+   :priority priority
+   :group-membership group-membership})
+
 (defn valid-connection-information?
   "Checks the connection map to see if we have all required information"
   [connection-information valid-keys]
@@ -74,17 +83,30 @@
 (defn push
   "Send a message using spread. Takes a connection object, group object, reliability setting, and map data to be sent"
   [connection group data]
-  (let [json-data (json/write-str data)
-        message (SpreadMessage.)]
+  (let [message (SpreadMessage.)]
     (.addGroup message group)
-    (.setData message (.getBytes json-data))
+    (.setData message (.getBytes data))
     (.multicast connection message)))
+
+(defn push-map->json
+  "Send a message using spread. takes a map that gets converted to json to be sent."
+  [connection group data]
+  (let [json-data (json/write-str data)]
+    (push connection group json-data)))
 
 (defn pull
   "Retrieves a message on the current connection and returns it as a map"
   [connection]
   (let [message (.receive connection)]
     (if message
-      (json/read-str (String. (.getData message) "UTF-8")
-                     :key-fn keyword)
+      (String. (.getData message) "UTF-8")
       (msg/err "Message could not be recieved"))))
+
+(defn pull-json->map
+  "Converts incoming json to a map"
+  [connection]
+  (let [message (pull connection)]
+    (if message
+      (json/read-str message :key-fn keyword)
+      (msg/err "Message could not be recieved"))))
+
