@@ -7,9 +7,13 @@
 (def retrieve-group "waldo-execute")
 (def spread-con {:ip "127.0.0.1"
                  :port 4803
-                 :private-name "waldo-executor"
                  :priority false
                  :group-membership false})
+
+(defn intended-spread?
+  "Checks to see if the given message was intended for execution at this location"
+  [briefcase spread-name]
+  (= (:exe-name-spread (:config briefcase)) spread-name))
 
 (defn logic
   "Holds the sequence of events that will take place in the executor."
@@ -28,7 +32,7 @@
           (msg/suc "Retrieved agent.")
           (def briefcase (hand-briefcase message))
           (msg/suc "Initialized agent.")
-          (if (:do-next briefcase)
+          (if (and (:do-next briefcase) (intended-spread? briefcase (first args)))
             (do
               ; Execute the code
               (execute-list (string->list (:code briefcase)))
@@ -40,7 +44,7 @@
               (println)
               (def do-next (string->fn (:do-next briefcase)))
               (do-next briefcase))
-            (msg/err ":do-next not specified. Will not run code.")))
+            (msg/err "Will not run code.")))
         (catch Exception e (do
                              (msg/err (str "Unable to execute code: " (.getMessage e))))))
       (recur (spread/pull connection)))))

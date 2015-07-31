@@ -1,4 +1,4 @@
-{:config {:waldo-executor "exe-1"}
+{:config {:exe-name-spread "exe-4"}
  :data {:great "Persona 4"
         :best "Silent hill 2"}
  :do-next "check-both"}
