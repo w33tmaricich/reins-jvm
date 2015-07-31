@@ -28,23 +28,21 @@
           (msg/suc "Retrieved agent.")
           (def briefcase (hand-briefcase message))
           (msg/suc "Initialized agent.")
-          ;(msg/data 'briefcase-code (:code briefcase))
-          ; Execute the code
-          (execute-list (string->list (:code briefcase)))
-          (msg/suc "Initialized functions.")
-          ; Run the next relevant function
-          (println)
-          (println "Starting Execution:")
-          (println "-------------------")
-          (println)
           (if (:do-next briefcase)
             (do
+              ; Execute the code
+              (execute-list (string->list (:code briefcase)))
+              (msg/suc "Initialized functions.")
+              ; Run the next relevant function
+              (println)
+              (println "Starting Execution:")
+              (println "-------------------")
+              (println)
               (def do-next (string->fn (:do-next briefcase)))
               (do-next briefcase))
             (msg/err ":do-next not specified. Will not run code.")))
         (catch Exception e (do
-                             (msg/err (str "Unable to execute code: " (.getMessage e)))
-                             (spread/disconnect connection))))
+                             (msg/err (str "Unable to execute code: " (.getMessage e))))))
       (recur (spread/pull connection)))))
 
 (defn -main

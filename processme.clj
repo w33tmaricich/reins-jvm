@@ -1,6 +1,8 @@
 {:data {:great "Persona 4"
         :best "Silent hill 2"}}
 
+(ns silent.hill.best.processme)
+
 (defn bestgame?
   [game]
   (if (= "Silent hill 2" game)
