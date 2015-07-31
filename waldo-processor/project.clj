@@ -6,4 +6,5 @@
   :dependencies [[org.clojure/clojure "1.6.0"]]
   :main ^:skip-aot waldo-processor.core
   :target-path "target/%s"
+  :resource-paths ["resources/spread.jar"]
   :profiles {:uberjar {:aot :all}})

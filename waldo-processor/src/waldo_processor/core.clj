@@ -1,4 +1,5 @@
 (ns waldo-processor.core
+  (:require [waldo-processor.communications.spread :as spread])
   (:gen-class))
 
 (defn string->list
@@ -20,7 +21,7 @@
   "Creates a briefcase just from data"
   [data code]
   {:config {}
-   :fnmap {:do-next nil}
+   :do-next nil
    :data (:data data)
    :code (apply str code)})
 

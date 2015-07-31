@@ -25,7 +25,7 @@
       (try
         (do
           ; Get the briefcase
-          (msg/suc "Retrieved briefcase: " message)
+          (msg/suc "Retrieved agent: " message)
           (def briefcase (hand-briefcase message))
           (msg/data 'briefcase-code (:code briefcase))
           ; Execute the code
