@@ -16,7 +16,7 @@
   [& args]
   (let [connection (spread/connect (spread/connection-information (:ip spread-con)
                                                                   (:port spread-con)
-                                                                  (:private-name spread-con)
+                                                                  (first args)
                                                                   (:priority spread-con)
                                                                   (:group-membership spread-con)))
         grp-retrieve (spread/join-group retrieve-group connection)]
@@ -25,17 +25,23 @@
       (try
         (do
           ; Get the briefcase
-          (msg/suc "Retrieved agent: " message)
+          (msg/suc "Retrieved agent.")
           (def briefcase (hand-briefcase message))
-          (msg/data 'briefcase-code (:code briefcase))
+          (msg/suc "Initialized agent.")
+          ;(msg/data 'briefcase-code (:code briefcase))
           ; Execute the code
           (execute-list (string->list (:code briefcase)))
+          (msg/suc "Initialized functions.")
           ; Run the next relevant function
-          ;(def do-next (read-string (:do-next (:fnmap briefcase))))
-          (def do-next (string->fn (:do-next (:fnmap briefcase))))
-          (do-next))
-          ;(execute-list (string->list code))
-
+          (println)
+          (println "Starting Execution:")
+          (println "-------------------")
+          (println)
+          (if (:do-next briefcase)
+            (do
+              (def do-next (string->fn (:do-next briefcase)))
+              (do-next briefcase))
+            (msg/err ":do-next not specified. Will not run code.")))
         (catch Exception e (do
                              (msg/err (str "Unable to execute code: " (.getMessage e)))
                              (spread/disconnect connection))))

@@ -4,7 +4,7 @@
 (defn string->list
   "Converts the string into a list of executable code."
   [s]
-  (read-string (str \( s \))))
+  (read-string s))
 
 (defn string->fn
   "Converts a string to a function. Usially used on a string declare."
@@ -28,4 +28,4 @@
 (defn hand-briefcase
   "Takes a list of specically formatted waldo code and returns the briefcase"
   [message]
-  (eval (first (string->list message))))
+  (eval (string->list message)))
