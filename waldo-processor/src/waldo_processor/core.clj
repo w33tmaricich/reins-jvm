@@ -20,10 +20,10 @@
 
 (defn make-briefcase
   "Creates a briefcase just from data"
-  [data code do-next]
-  {:config {}
-   :do-next (str "((declare " do-next "))")
-   :data (:data data)
+  [header code]
+  {:config (:config header)
+   :do-next (str "((declare " (:do-next header) "))")
+   :data (:data header)
    :code (apply str code)})
 
 (defn -main
@@ -32,7 +32,7 @@
   (println args)
   (let [code-list (file->list (first args))
         code (code->string (rest code-list))
-        briefcase (make-briefcase (first code-list) code (second args))
+        briefcase (make-briefcase (first code-list) code)
         connection (spread/connect (spread/connection-information "127.0.0.1" 4803 "waldo-processor" false false))
         grp-execute (spread/join-group "waldo-execute" connection)]
 

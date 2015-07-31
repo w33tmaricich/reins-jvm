@@ -1,5 +1,7 @@
-{:data {:great "Persona 4"
-        :best "Silent hill 2"}}
+{:config {:waldo-executor "exe-1"}
+ :data {:great "Persona 4"
+        :best "Silent hill 2"}
+ :do-next "check-both"}
 
 (ns silent.hill.best.processme)
 
