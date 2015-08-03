@@ -26,27 +26,28 @@
         grp-retrieve (spread/join-group retrieve-group connection)]
     (msg/suc "Waiting for code...")
     (loop [message (spread/pull connection)] ; Retrieve code to be run from spread
-      (try
-        (do
-          ; Get the briefcase
-          (msg/suc "Retrieved agent.")
-          (def briefcase (hand-briefcase message))
-          (msg/suc "Initialized agent.")
-          (if (and (:do-next briefcase) (intended-spread? briefcase (first args)))
-            (do
-              ; Execute the code
-              (execute-list (string->list (:code briefcase)))
-              (msg/suc "Initialized functions.")
-              ; Run the next relevant function
-              (println)
-              (println "Starting Execution:")
-              (println "-------------------")
-              (println)
-              (def do-next (string->fn (:do-next briefcase)))
-              (do-next briefcase))
-            (msg/err "Will not run code.")))
-        (catch Exception e (do
-                             (msg/err (str "Unable to execute code: " (.getMessage e))))))
+      (future
+        (try
+          (do
+            ; Get the briefcase
+            (msg/suc "Retrieved agent.")
+            (def briefcase (hand-briefcase message))
+            (msg/suc "Initialized agent.")
+            (if (and (:do-next briefcase) (intended-spread? briefcase (first args)))
+              (do
+                ; Execute the code
+                (execute-list (string->list (:code briefcase)))
+                (msg/suc "Initialized functions.")
+                ; Run the next relevant function
+                (println)
+                (println "Starting Execution:")
+                (println "-------------------")
+                (println)
+                (def do-next (string->fn (:do-next briefcase)))
+                (do-next briefcase))
+              (msg/err "Will not run code.")))
+          (catch Exception e (do
+                              (msg/err (str "Unable to execute code: " (.getMessage e)))))))
       (recur (spread/pull connection)))))
 
 (defn -main

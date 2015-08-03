@@ -2,7 +2,7 @@
  :data {:number 1}
  :do-next "increment-counter"}
 
-(ns count.jumpingnumbers)
+;(ns count.jumpingnumbers)
 
 ;;;; Spread jumping library
 
@@ -107,11 +107,12 @@
         connection (connect (connection-information "127.0.0.1" 4803 (str "bobby" (rand-int 10000)) false false))
         exe-grp (join-group "waldo-execute" connection)]
     (println number)
-    (push connection exe-grp (str {:config {:exe-name-spread (if (= (:exe-name-spread (:config briefcase)) "exe-1")
+    (Thread/sleep 2000)
+    (if (< number 20)
+      (push connection exe-grp (str {:config {:exe-name-spread (if (= (:exe-name-spread (:config briefcase)) "exe-1")
                                                           "exe-2"
                                                           "exe-1")}
                               :data {:number number}
                               :do-next (:do-next briefcase)
-                              :code (:code briefcase)}))
-    (Thread/sleep 2000)
+                              :code (:code briefcase)})))
     (disconnect connection)))
