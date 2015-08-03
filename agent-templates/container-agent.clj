@@ -1,0 +1,1 @@
+;;;; Container Agent. Holds data. There are some requirements for retrieving that data. If the requirements are met, then the data is transmitted somewhere. You can think of them as complex variables.

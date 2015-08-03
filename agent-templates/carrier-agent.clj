@@ -1,0 +1,1 @@
+;;;; Carrier Agent. Carries agents from one location to another. An agent can request to be picked up by a carrier agent. If the carrier accepts the request, it will slurp up the agent, transport it somewhere, and deploy it once it reaches its destination.
