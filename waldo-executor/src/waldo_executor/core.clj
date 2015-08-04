@@ -71,11 +71,11 @@
           (let [briefcase (hand-briefcase (.readUTF incoming-connection))]
             ; Close the connection. We have everything we need.
             (.close incoming-connection)
-            (println briefcase)
             ; If the briefcase specifies a function to run
             (when (:do-next briefcase)
               ; Initialize all functions and variables
               (execute-list (string->list (:code briefcase)))
+              ; Run the relvant function
               (def do-next (string->fn (:do-next briefcase)))
               (do-next briefcase)))
           (catch Exception e (do (println "End of file: " e)))))
