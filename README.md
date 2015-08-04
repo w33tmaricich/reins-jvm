@@ -31,7 +31,7 @@ FIXME: I expect that there will be many options when configuring the executor. T
 Here are a few example usecases.
 
 The hello world version of an agent is extremely simple. The agent's code would look a little something like this:
-```
+```clojure
 {:config {:exe-name-spread "exe-1"}
  :data {}
  :do-next "do-next"}
@@ -81,6 +81,14 @@ We don't currently know what types of agents will take form throughout experimen
 + Transport Agent
     - Sends agents using protocols.
     - A transport agent is one that has knowledge of network protocols and other data transmission methods. It takes in an agent as a parameter and sends it to another location using some sort of transmission method.
+
+### Agent Request Codes
+
+When an agent is sent over a specific port, a byte code is sent along with the data. This byte can be used to determine what type of agent is coming, what privledges the agent has, etc. Below are a list of codes. Their numbers correspond to the code type.
+1. Mobile Agent
+2. Stationary Agent
+3. Daemon
+4. Kill me
 
 ### Bugs
 
