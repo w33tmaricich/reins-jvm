@@ -21,20 +21,19 @@
           out-stream (DataOutputStream. (BufferedOutputStream. (.getOutputStream socket)))]
       (.writeUTF out-stream (str briefcase))
       (.flush out-stream)
-      (.close out-stream)
-      (println " [ suc ] --> Move to" ip ":" port "was successful."))
+      (.close out-stream))
+      ;(println " [ suc ] --> Move to" ip ":" port "was successful."))
     (catch Exception e (println "Error: " e))))
 
 (defn chat
   "This function will run when the agent reaches its destination."
   [briefcase]
-  (println (:message (:data briefcase)))
+  (println (:message (:data briefcase)) "\n[you]---v ")
   (move (:partner-location (:data briefcase))
         (:port (:config briefcase))
         {:config (:config briefcase)
          :do-next "((declare chat))"
          :data {:current-location (:partner-location (:data briefcase))
                 :partner-location (:current-location (:data briefcase))
-                :message (str (read-line))}
+                :message (str \[ (:current-location (:data briefcase)) "]---v\n" (read-line))}
          :code (:code briefcase)}))
-  ;(move "127.0.0.1" (:port (:config briefcase)) briefcase))
