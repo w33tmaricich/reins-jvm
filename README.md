@@ -85,10 +85,10 @@ We don't currently know what types of agents will take form throughout experimen
 ### Agent Request Codes
 
 When an agent is sent over a specific port, a byte code is sent along with the data. This byte can be used to determine what type of agent is coming, what privledges the agent has, etc. Below are a list of codes. Their numbers correspond to the code type.
-1. Mobile Agent
-2. Stationary Agent
-3. Daemon
-4. Kill me
+	1. Mobile Agent
+	2. Stationary Agent
+	3. Daemon
+	4. Kill me
 
 ### Bugs
 

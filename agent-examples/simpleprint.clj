@@ -3,7 +3,7 @@
         :best "Silent hill 2"}
  :do-next "check-both"}
 
-(ns silent.hill.best.processme)
+;(ns silent.hill.best.processme)
 
 (defn bestgame?
   [game]
