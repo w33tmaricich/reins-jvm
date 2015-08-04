@@ -9,6 +9,9 @@
 (def using-spread false)
 (def using-port true)
 
+(def IP "127.0.0.1")
+(def PORT 8002)
+
 (defn string->list
   "Converts the string into a list of executable code."
   [s]
@@ -48,9 +51,9 @@
         (spread/disconnect connection)))
 
     (when using-port
-      (let [socket (Socket. "127.0.0.1" 8002)
+      (let [socket (Socket. IP PORT)
             out-stream (DataOutputStream. (BufferedOutputStream. (.getOutputStream socket)))]
-        (msg/message "prt" "Sending via port 8001")
+        (msg/message "prt" "Sending via port" PORT)
         (msg/data 'briefcase briefcase)
         (.writeUTF out-stream (str briefcase))
         (.flush out-stream)

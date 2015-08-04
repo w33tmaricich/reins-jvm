@@ -20,7 +20,7 @@
       (.writeUTF out-stream (str briefcase))
       (.flush out-stream)
       (.close out-stream)
-      (println " [ suc ] --> Jump successful."))
+      (println " [ suc ] --> Move to" ip ":" port "was successful."))
     (catch Exception e (println "Error: " e))))
 
 (defn do-next
