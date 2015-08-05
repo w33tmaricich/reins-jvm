@@ -10,7 +10,7 @@
 (def using-port true)
 
 (def IP "127.0.0.1")
-(def PORT 8002)
+(def PORT 1612)
 
 (defn string->list
   "Converts the string into a list of executable code."

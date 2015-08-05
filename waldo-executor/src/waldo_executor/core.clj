@@ -10,7 +10,7 @@
 (def using-spread false)
 (def using-port true)
 
-(def PORT 8002)
+(def PORT 1612)
 
 (def retrieve-group "waldo-execute")
 (def spread-con {:ip "127.0.0.1"

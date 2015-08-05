@@ -32,7 +32,7 @@ Here are a few example usecases.
 
 The hello world version of an agent is extremely simple. The agent's code would look a little something like this:
 ```clojure
-{:config {:exe-name-spread "exe-1"}
+{:config {}
  :data {}
  :do-next "do-next"}
 
@@ -82,13 +82,14 @@ We don't currently know what types of agents will take form throughout experimen
     - Sends agents using protocols.
     - A transport agent is one that has knowledge of network protocols and other data transmission methods. It takes in an agent as a parameter and sends it to another location using some sort of transmission method.
 
-### Agent Request Codes
+### Agent TCP Ports
 
-When an agent is sent over a specific port, a byte code is sent along with the data. This byte can be used to determine what type of agent is coming, what privledges the agent has, etc. Below are a list of codes. Their numbers correspond to the code type.
-	1. Mobile Agent
-	2. Stationary Agent
-	3. Daemon
-	4. Kill me
+In order to keep the system self contained, the agents communicate and move via TCP. If you wish to restrict the actions of a specific type of agent, you can simply restrict that ports usage. As long as you have your own agents on the network monitoring who comes into the network, your system should stay secure. Here is a list of port numbers and what they are associated with.
+
++ 1612
+    - Executor. Have an agent send itself to an IP at this port in order to allow it to run. This is only implemented on open networks. This ip can be kept secret and modified if need be.
++ 1613
+    - Carrier Agent. If you want to enter a network or send an agent to a carrier, this is the port you would use.
 
 ### Bugs
 
