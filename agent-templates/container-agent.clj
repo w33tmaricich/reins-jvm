@@ -37,6 +37,7 @@
           out-stream (DataOutputStream. (BufferedOutputStream. (.getOutputStream socket)))]
       (.writeUTF out-stream (str briefcase))
       (.flush out-stream)
+      (.close socket)
       (println " [ cln ] --> Briefcase sent to" ip ":" port))
     (catch Exception e (println "Error: " e))))
 
@@ -74,6 +75,7 @@
   [briefcase request out-stream response]
   (.writeUTF out-stream (str response))
   (.flush out-stream)
+  (.close out-stream)
   (println " [ con ] --> Response sent."))
 
 (defn listen
@@ -87,7 +89,7 @@
       (let [message (.readUTF incoming-connection)]
         (if (valid-request? message)
           (do
-            (println " [ con ] --> Valid request made. Sending stored information")
+            (println " [ con ] --> Valid request made. Sending stored information.")
             ; Send requested data
             (let [mobile-agent-request (eval (string->data message))]
               (send-response briefcase mobile-agent-request outgoing-connection (:data briefcase)))
