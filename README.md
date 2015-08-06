@@ -90,6 +90,10 @@ In order to keep the system self contained, the agents communicate and move via 
     - Executor. Have an agent send itself to an IP at this port in order to allow it to run. This is only implemented on open networks. This ip can be kept secret and modified if need be.
 + 1613
     - Carrier Agent. If you want to enter a network or send an agent to a carrier, this is the port you would use.
++ 1614
+    - Cloner Agent. If you want to duplicate an agent or multicast it to many computers at once, this is the port you would use.
++ 1615
+    - Container Agent. If you wish to request agent data from a specific ip, you would use this port number.
 
 ### Bugs
 
