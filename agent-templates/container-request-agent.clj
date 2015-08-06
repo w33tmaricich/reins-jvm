@@ -6,9 +6,9 @@
 
 {:config {:communication-method "TCP"
           :listen-port 8023 ; The port the container request agent will listen on.
-          :home "127.28.12.42"
+          :home "127.0.0.1"
           :container-port 1615
-          :container-ip "172.28.16.67"}
+          :container-ip "192.168.1.18"}
  :data {}
  :do-next "access-container"}
 
@@ -27,29 +27,27 @@
           out-stream (DataOutputStream. (BufferedOutputStream. (.getOutputStream socket)))]
       (.writeUTF out-stream (str message))
       (.flush out-stream)
-      (.close out-stream)
-      (println " [ suc ] --> Request sent to" ip ":" port))
+      (println " [ suc ] --> Request sent to" ip ":" port)
+      socket)
     (catch Exception e (println "Error: " e))))
 
 (defn access-container
   "Sends a message to the container in order to attempt to access the data it holds."
   [briefcase]
-  (send-req
+  (def socket (send-req
     (:container-ip (:config briefcase))
     (:container-port (:config briefcase))
     {:access-code "supersecret"
      :response-method {:type "TCP"
                        :ip (:home (:config briefcase))
-                       :port (:listen-port (:config briefcase))}})
-  (listen briefcase))
+                       :port (:listen-port (:config briefcase))}}))
+  (listen briefcase socket))
 
 (defn listen
   "Listens for a response from the container."
-  [briefcase]
-  (let [socket (ServerSocket. (:listen-port (:config briefcase)))]
+  [briefcase socket]
+  (let [sock socket]
     (println " [ suc ] --> Waiting for data access request.")
-    (let [incoming-connection (DataInputStream. (BufferedInputStream. (.getInputStream (.accept socket))))
+    (let [incoming-connection (DataInputStream. (BufferedInputStream. (.getInputStream sock)))
           message (.readUTF incoming-connection)]
-      (.close incoming-connection)
-      (.close socket)
       (println message))))

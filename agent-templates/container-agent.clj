@@ -12,7 +12,7 @@
 ;;;;                     :port 1615}}
 
 {:config {:communication-method "TCP"
-          :deploy-loc "172.28.16.67"
+          :deploy-loc "192.168.1.18"
           :move-port 1612
           :listen-port 1615}      ; The port the container uses to listen to requests.
  :data {:info "You got this from a container!"}
@@ -37,7 +37,6 @@
           out-stream (DataOutputStream. (BufferedOutputStream. (.getOutputStream socket)))]
       (.writeUTF out-stream (str briefcase))
       (.flush out-stream)
-      (.close out-stream)
       (println " [ cln ] --> Briefcase sent to" ip ":" port))
     (catch Exception e (println "Error: " e))))
 
@@ -72,29 +71,31 @@
 
 (defn send-response
   "Sends a response back to the requester."
-  [briefcase request response]
-  (let [socket (Socket. (:ip (:response-method request))
-                        (:port (:response-method request)))
-        out-stream (DataOutputStream. (BufferedOutputStream. (.getOutputStream socket)))]
-    (.writeUTF out-stream (str response))
-    (.flush out-stream)
-    (.close out-stream)
-    (.close socket)
-    (println " [ con ] --> Response sent.")))
+  [briefcase request out-stream response]
+  (.writeUTF out-stream (str response))
+  (.flush out-stream)
+  (println " [ con ] --> Response sent."))
 
 (defn listen
   "Waits and listens for any agents that request access. If the agent has the proper credentials, the data stored within the container is transmitted."
   [briefcase]
   (let [socket (ServerSocket. (:listen-port (:config briefcase)))]
     (println " [ con ] --> Container waiting for data access request.")
-    (loop [incoming-connection (DataInputStream. (BufferedInputStream. (.getInputStream (.accept socket))))]
+    (loop [connected-socket (.accept socket)
+           incoming-connection (DataInputStream. (BufferedInputStream. (.getInputStream connected-socket)))
+           outgoing-connection (DataOutputStream. (BufferedOutputStream. (.getOutputStream connected-socket)))]
       (let [message (.readUTF incoming-connection)]
         (if (valid-request? message)
           (do
             (println " [ con ] --> Valid request made. Sending stored information")
-            (.close incoming-connection)
             ; Send requested data
             (let [mobile-agent-request (eval (string->data message))]
-              (send-response briefcase mobile-agent-request (:data briefcase)))
-            (recur (DataInputStream. (BufferedInputStream. (.getInputStream (.accept socket))))))
-          (recur (DataInputStream. (BufferedInputStream. (.getInputStream (.accept socket))))))))))
+              (send-response briefcase mobile-agent-request outgoing-connection (:data briefcase)))
+            (let [new-socket (.accept socket)]
+              (recur new-socket
+                     (DataInputStream. (BufferedInputStream. (.getInputStream new-socket)))
+                     (DataOutputStream. (BufferedOutputStream. (.getOutputStream new-socket))))))
+          (let [new-socket (.accept socket)]
+            (recur new-socket
+                   (DataInputStream. (BufferedInputStream. (.getInputStream new-socket)))
+                   (DataOutputStream. (BufferedOutputStream. (.getOutputStream new-socket))))))))))
