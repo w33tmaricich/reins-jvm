@@ -1,15 +1,15 @@
-;;;; Container Request Agent
+;;;; Function Request Agent
 ;;;;
-;;;; The container request agent asks for access to a given container. If the container
-;;;; exists at the anticipated location, then the container sends its data to the
-;;;; container request agent.
+;;;; The function request agent asks for access to a given function. If the function
+;;;; exists at the anticipated location, then the function sends its calcuated value to the
+;;;; function request agent after all computations have taken place
 
 {:config {:communication-method "TCP"
           :home "127.0.0.1"
-          :container-port 1615
-          :container-ip "192.168.1.18"}
+          :function-port 1616
+          :function-ip "172.28.16.67"}
  :data {}
- :do-next "access-container"}
+ :do-next "access-function"}
 
 (import java.net.Socket)
 (import java.io.DataOutputStream)
@@ -18,7 +18,7 @@
 (import java.io.BufferedInputStream)
 
 (defn send-req
-  "Sends a specialized message to the carrier."
+  "Sends a specialized message to the function."
   [ip port message]
   (try
     (let [socket (Socket. ip port)
@@ -29,20 +29,21 @@
       socket)
     (catch Exception e (println "Error: " e))))
 
-(defn access-container
-  "Sends a message to the container in order to attempt to access the data it holds."
-  [briefcase]
-  (let [socket (send-req
-                 (:container-ip (:config briefcase))
-                 (:container-port (:config briefcase))
-                 {:access-code "supersecret"})]
-    (listen briefcase socket))
-
-(defn listen
-  "Listens for a response from the container."
+(defn retrieve-response
+  "Listens for a response from the function."
   [briefcase socket]
   (let [sock socket]
     (println " [ suc ] --> Waiting for data access request.")
     (let [incoming-connection (DataInputStream. (BufferedInputStream. (.getInputStream sock)))
           message (.readUTF incoming-connection)]
       (println message))))
+
+(defn access-function
+  "Sends a message to the function."
+  [briefcase]
+  (let [socket (send-req
+                 (:function-ip (:config briefcase))
+                 (:function-port (:config briefcase))
+                 {:access-code "add"
+                  :parameters [1 2 3 4 5]})]
+    (retrieve-response briefcase socket)))

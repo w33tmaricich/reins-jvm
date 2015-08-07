@@ -6,10 +6,7 @@
 ;;;; container will then connect to the requesting agent and send the data it holds.
 ;;;;
 ;;;; Container request format:
-;;;;  {:access-code "Some code that doesnt have to be a string"
-;;;;   :response-method {:type "TCP"
-;;;;                     :ip "127.0.0.1"
-;;;;                     :port 1615}}
+;;;;  {:access-code "Some code that doesnt have to be a string"}
 
 {:config {:communication-method "TCP"
           :deploy-loc "192.168.1.18"
