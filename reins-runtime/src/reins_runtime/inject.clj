@@ -1,5 +1,5 @@
-(ns waldo-executor.inject
-  (:require [waldo-executor.utils.messages :as msg]))
+(ns reins-runtime.inject
+  (:require [reins-runtime.utils.messages :as msg]))
 
 (defn string->list
   "Converts the string into a list of executable code."

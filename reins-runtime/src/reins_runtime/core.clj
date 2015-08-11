@@ -1,7 +1,7 @@
-(ns waldo-executor.core
-  (:require [waldo-executor.inject :refer :all]
-            [waldo-executor.communications.spread :as spread]
-            [waldo-executor.utils.messages :as msg])
+(ns reins-runtime.core
+  (:require [reins-runtime.inject :refer :all]
+            [reins-runtime.communications.spread :as spread]
+            [reins-runtime.utils.messages :as msg])
   (:gen-class))
 (import java.net.ServerSocket)
 (import java.io.DataInputStream)

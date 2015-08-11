@@ -1,5 +1,5 @@
-(ns waldo-processor.communications.spread
-  (:require [waldo-processor.utils.messages :as msg]))
+(ns reins-compiler.communications.spread
+  (:require [reins-compiler.utils.messages :as msg]))
 
 (import spread.SpreadConnection)
 (import spread.SpreadGroup)

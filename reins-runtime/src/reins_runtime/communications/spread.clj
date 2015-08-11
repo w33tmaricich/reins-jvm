@@ -1,5 +1,5 @@
-(ns waldo-executor.communications.spread
-  (:require [waldo-executor.utils.messages :as msg]
+(ns reins-runtime.communications.spread
+  (:require [reins-runtime.utils.messages :as msg]
             [clojure.data.json :as json]))
 (import spread.SpreadConnection)
 (import spread.SpreadGroup)

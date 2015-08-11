@@ -1,6 +1,6 @@
-# waldo
+# reins
 
-Waldo is a processor and executor that can be used to deploy mobile agents written in Clojure. Mobile agents, by definition, are a combination of computer software and data which is able to migrate from one computer to another autonomously and continue its execution on the destination computer. Waldo aims at making this type of software easy to write, while still providing the safty and security we come to expect in modern applications.
+Reins is a processor and executor that can be used to deploy mobile agents written in Clojure. Mobile agents, by definition, are a combination of computer software and data which is able to migrate from one computer to another autonomously and continue its execution on the destination computer. Reins aims at making this type of software easy to write, while still providing the safty and security we come to expect in modern applications.
 
 The executor is a daemon that runs on a machine. It listens via many different data transfer protocols for incoming agents. If an agent is detected, it is ingested and allowed to run. It is a simple environment for applications to run within.
 
@@ -16,11 +16,11 @@ In order to install, simply download or compile the jars on your own computer.
 
 To initialize the execution daemon, simply run the jar with a single parameter. The parameter is the unique name you want to give this executor. Once you have started up the daemon, it will work in the background, running any agents that have the proper credentials to do so.
 
-    $ java -jar waldo-executor-0.1.0-standalone.jar [custom-name]
+    $ java -jar reins-executor-0.1.0-standalone.jar [custom-name]
 
 To use the processor, simply run the processor with the path to the agent as the first parameter. This will convert the agent code into an executor-readable format and send a message via spread to be picked up by any listening executors.
 
-    $ java -jar waldo-processor-0.1.0-standalone.jar [agent-path]
+    $ java -jar reins-processor-0.1.0-standalone.jar [agent-path]
 
 ## Options
 
@@ -46,7 +46,7 @@ The first map above is the agents briefcase. The briefcase holds information abo
 
 If that agent was stored in a file titled 'helloworld.clj,' you would process the code by running the following command:
 
-    $ java -jar waldo-processor-0.1.0-standalone.jar helloworld.clj
+    $ java -jar reins-processor-0.1.0-standalone.jar helloworld.clj
 
 The processor sends the processed agent to the executor, and the code will run on the machine it was sent to.
 
@@ -74,10 +74,10 @@ We don't currently know what types of agents will take form throughout experimen
     - An agent that performs a single task, taking one input and giving one output. Function agents are part of the logic of the application. Agents uses fuction agents to do calcuations that are not needed this second, but could be retrieved at a later time.
 + Master Agent
     - A controller of agents.
-    - A master agent controls other agents. This could be concidered the centeral hub of the network application. Noramlly it is stationary, and provides the user with some sort of interface for interacting with the other agents. 
+    - A master agent controls other agents. This could be concidered the centeral hub of the network application. Noramlly it is stationary, and provides the user with some sort of interface for interacting with the other agents.
 + Mother Agent
     - Births uique agents.
-    - A mother agent is like a cloning agent, but creates unique versions of a common agent. These agents are created with unique identifiers so they can be identified from one another. 
+    - A mother agent is like a cloning agent, but creates unique versions of a common agent. These agents are created with unique identifiers so they can be identified from one another.
 + Transport Agent
     - Sends agents using protocols.
     - A transport agent is one that has knowledge of network protocols and other data transmission methods. It takes in an agent as a parameter and sends it to another location using some sort of transmission method.
@@ -102,5 +102,3 @@ Im sure there will be many!
 ## License
 
 Copyright © 2015 Alexander Maricich
-
-Distributed under the Eclipse Public License either version 1.0

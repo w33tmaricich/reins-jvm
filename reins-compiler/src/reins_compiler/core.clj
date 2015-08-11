@@ -1,6 +1,6 @@
-(ns waldo-processor.core
-  (:require [waldo-processor.communications.spread :as spread]
-            [waldo-processor.utils.messages :as msg])
+(ns reins-compiler.core
+  (:require [reins-compiler.communications.spread :as spread]
+            [reins-compiler.utils.messages :as msg])
   (:gen-class))
 (import java.net.Socket)
 (import java.io.DataOutputStream)
@@ -44,7 +44,7 @@
         briefcase (make-briefcase (first code-list) code)]
 
     (when using-spread
-      (let [connection (spread/connect (spread/connection-information "127.0.0.1" 4803 "waldo-processor" false false))
+      (let [connection (spread/connect (spread/connection-information "127.0.0.1" 4803 "reins-compiler" false false))
             grp-execute (spread/join-group "waldo-execute" connection)]
         (msg/data 'briefcase briefcase)
         (spread/push connection grp-execute (str briefcase))
