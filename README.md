@@ -1,10 +1,10 @@
 # reins
 
-Reins is a processor and executor that can be used to deploy mobile agents written in Clojure. Mobile agents, by definition, are a combination of computer software and data which is able to migrate from one computer to another autonomously and continue its execution on the destination computer. Reins aims at making this type of software easy to write, while still providing the safty and security we come to expect in modern applications.
+Reins is a compiler and runtime that can be used to deploy mobile agents written in Clojure. Mobile agents, by definition, are a combination of computer software and data which is able to migrate from one computer to another autonomously and continue its execution on the destination computer. Reins aims at making this type of software easy to write, while still providing the safty and security we come to expect in modern applications.
 
-The executor is a daemon that runs on a machine. It listens via many different data transfer protocols for incoming agents. If an agent is detected, it is ingested and allowed to run. It is a simple environment for applications to run within.
+The runtime is a daemon that runs on a machine. It listens via many different data transfer protocols for incoming agents. If an agent is detected, it is ingested and allowed to run. It is a simple environment for applications to run within.
 
-The processor converts a specially formatted Clojure file into an executor readable format. Optionally, the processor can send the processed agent via a data transfer protocol.
+The compiler converts a specially formatted Clojure file into a runtime readable format. Optionally, the compiler can send the processed agent via a data transfer protocol.
 
 Once the agent begins execution, it is fully in control of itself. If it knows where it can go and how to get there, agents can move themselves to other locations. Agents should be written to be small, transferable, and self contained. If you can abstract some functionality within an agent into another, you should. The smaller the agent, the better. The focus of writing network applications should be creating many small programs that can do the task of one large one.
 
@@ -14,17 +14,17 @@ In order to install, simply download or compile the jars on your own computer.
 
 ## Usage
 
-To initialize the execution daemon, simply run the jar with a single parameter. The parameter is the unique name you want to give this executor. Once you have started up the daemon, it will work in the background, running any agents that have the proper credentials to do so.
+To initialize the execution daemon, simply run the jar with a single parameter. The parameter is the unique name you want to give this runtime. Once you have started up the daemon, it will work in the background, running any agents that have the proper credentials to do so.
 
-    $ java -jar reins-executor-0.1.0-standalone.jar [custom-name]
+    $ java -jar reins-runtime-0.1.0-standalone.jar [custom-name]
 
-To use the processor, simply run the processor with the path to the agent as the first parameter. This will convert the agent code into an executor-readable format and send a message via spread to be picked up by any listening executors.
+To use the compiler, simply run the compiler with the path to the agent as the first parameter. This will convert the agent code into an runtime-readable format and send a message via spread to be picked up by any listening runtimes.
 
-    $ java -jar reins-processor-0.1.0-standalone.jar [agent-path]
+    $ java -jar reins-compiler-0.1.0-standalone.jar [agent-path]
 
 ## Options
 
-FIXME: I expect that there will be many options when configuring the executor. They will go here at a later date
+FIXME: I expect that there will be many options when configuring the runtime. They will go here at a later date
 
 ## Examples
 
@@ -42,13 +42,13 @@ The hello world version of an agent is extremely simple. The agent's code would 
   (println "Hello, World!"))
 ```
 
-The first map above is the agents briefcase. The briefcase holds information about the agent. An agent carries a briefcase as it travels from one executor to another. The :config section is read by the executor as it enters. Currently, it states that it is looking for an executor that is connected to spread with a name of 'exe-1.' The :data section describes the persistant variables that are going to be carried with it as it moves. In this example, the application is not carrying any information with it. The :do-next section holds the name of the function that will be run when the agent begens execution.
+The first map above is the agents briefcase. The briefcase holds information about the agent. An agent carries a briefcase as it travels from one computer to another. The :config section is read by the runtime as it enters. Currently, it states that it is looking for an computer that is connected to spread with a name of 'exe-1.' The :data section describes the persistant variables that are going to be carried with it as it moves. In this example, the application is not carrying any information with it. The :do-next section holds the name of the function that will be run when the agent begens execution.
 
 If that agent was stored in a file titled 'helloworld.clj,' you would process the code by running the following command:
 
-    $ java -jar reins-processor-0.1.0-standalone.jar helloworld.clj
+    $ java -jar reins-compiler-0.1.0-standalone.jar helloworld.clj
 
-The processor sends the processed agent to the executor, and the code will run on the machine it was sent to.
+The compiler sends the processed agent to the active runtime, and the code will run on the machine it was sent to.
 
 ### Types of Agents
 
@@ -87,7 +87,7 @@ We don't currently know what types of agents will take form throughout experimen
 In order to keep the system self contained, the agents communicate and move via TCP. If you wish to restrict the actions of a specific type of agent, you can simply restrict that ports usage. As long as you have your own agents on the network monitoring who comes into the network, your system should stay secure. Here is a list of port numbers and what they are associated with.
 
 + 1612
-    - Executor. Have an agent send itself to an IP at this port in order to allow it to run. This is only implemented on open networks. This ip can be kept secret and modified if need be.
+    - Active Runtime. Have an agent send itself to an IP at this port in order to allow it to run. This is only implemented on open networks. This ip can be kept secret and modified if need be.
 + 1613
     - Carrier Agent. If you want to enter a network or send an agent to a carrier, this is the port you would use.
 + 1614
