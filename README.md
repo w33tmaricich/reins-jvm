@@ -42,7 +42,7 @@ The hello world version of an agent is extremely simple. The agent's code would 
   (println "Hello, World!"))
 ```
 
-The first map above is the agents briefcase. The briefcase holds information about the agent. An agent carries a briefcase as it travels from one computer to another. The :config section is read by the runtime as it enters. Currently, it states that it is looking for an computer that is connected to spread with a name of 'exe-1.' The :data section describes the persistant variables that are going to be carried with it as it moves. In this example, the application is not carrying any information with it. The :do-next section holds the name of the function that will be run when the agent begens execution.
+The first map above is the agents briefcase. The briefcase holds information about the agent. An agent carries a briefcase as it travels from one computer to another. The :config section is read by the runtime as it enters. The :data section describes the persistant variables that are going to be carried with it as it moves. In this example, the application is not carrying any information with it. The :do-next section holds the name of the function that will be run when the agent begens execution.
 
 If that agent was stored in a file titled 'helloworld.clj,' you would process the code by running the following command:
 
