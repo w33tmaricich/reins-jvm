@@ -1,4 +1,5 @@
-{:config {:exe-name-spread "exe-1"}
+{:config {:id :spread
+          :exe-name-spread "exe-1"}
  :data {}
  :do-next "do-next"}
 

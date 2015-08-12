@@ -8,7 +8,8 @@
 ;;;; Container request format:
 ;;;;  {:access-code "Some code that doesnt have to be a string"}
 
-{:config {:communication-method "TCP"
+{:config {:id :container
+          :communication-method "TCP"
           :deploy-loc "192.168.1.18"
           :move-port 1612
           :listen-port 1615}      ; The port the container uses to listen to requests.

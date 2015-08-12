@@ -4,7 +4,8 @@
 ;;;; a carrier to pick it up. If the carrier accepts, it will capture the agent that
 ;;;; made the request, move to the location of the executor, and deploy it on that machine.
 
-{:config {:communication-method "TCP"
+{:config {:id :mobile
+          :communication-method "TCP"
           :port 1612
           :carrier 1613}
  :data {}

@@ -10,7 +10,8 @@
 ;;;;  {:access-code "Some code that doesnt have to be a string"
 ;;;;   :parameters [12 4]}
 
-{:config {:communication-method "TCP"
+{:config {:id :function
+          :communication-method "TCP"
           :deploy-loc "172.28.16.67"
           :move-port 1612
           :listen-port 1616}

@@ -9,7 +9,8 @@
 ;;;;  {:access-code "Some code that doesnt have to be a string"
 ;;;;   :agent "(agent)"}
 
-{:config {:communication-method "TCP"
+{:config {:id :cloner
+          :communication-method "TCP"
           :deploy-loc "172.28.12.42"
           :move-port 1612
           :listen-port 1614}      ; The port the carrier uses to grab agents.

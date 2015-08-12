@@ -4,7 +4,8 @@
 ;;;; exists at the anticipated location, then the function sends its calcuated value to the
 ;;;; function request agent after all computations have taken place
 
-{:config {:communication-method "TCP"
+{:config {:id :mobile
+          :communication-method "TCP"
           :home "127.0.0.1"
           :function-port 1616
           :function-ip "172.28.16.67"}

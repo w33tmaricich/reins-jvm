@@ -4,7 +4,8 @@
 ;;;; a cloner to duplicate it to multiple different machines. If the cloner accepts, it will capture the agent that
 ;;;; made the request and deploy it on all the machines it knows of.
 
-{:config {:communication-method "TCP"
+{:config {:id :mobile
+          :communication-method "TCP"
           :port 1612
           :cloner 1614}
  :data {}

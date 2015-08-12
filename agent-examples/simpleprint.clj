@@ -1,4 +1,4 @@
-{:config {:exe-name-spread "exe-1"}
+{:config {:id :mobile}
  :data {:great "Persona 4"
         :best "Silent hill 2"}
  :do-next "check-both"}

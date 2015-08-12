@@ -4,7 +4,8 @@
 ;;;; exists at the anticipated location, then the container sends its data to the
 ;;;; container request agent.
 
-{:config {:communication-method "TCP"
+{:config {:id :mobile
+          :communication-method "TCP"
           :home "127.0.0.1"
           :container-port 1615
           :container-ip "192.168.1.18"}

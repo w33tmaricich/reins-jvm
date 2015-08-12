@@ -2,7 +2,8 @@
 ;;;;
 ;;;; This is a default mobile agent. It moves over a predetermined port via TCP.
 
-{:config {:communication-method "TCP"
+{:config {:id :mobile
+          :communication-method "TCP"
           :port 8002}
  :data {}
  :do-next "do-next"}

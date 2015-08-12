@@ -8,7 +8,8 @@
 ;;;;  {:access-code "Somecode that doesnt have to be a string"
 ;;;;   :agent "(agent)"}
 
-{:config {:communication-method "TCP"
+{:config {:id :carrier
+          :communication-method "TCP"
           :move-port 1612         ; The port the carrier uses to move.
           :listen-port 1613}      ; The port the carrier uses to grab agents.
  :data {:home "172.28.12.42"         ; Where the carrier sits and waits for requests.
