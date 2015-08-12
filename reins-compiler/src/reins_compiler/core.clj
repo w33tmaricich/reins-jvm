@@ -1,12 +1,11 @@
 (ns reins-compiler.core
-  (:require [reins-compiler.communications.spread :as spread]
-            [reins-compiler.utils.messages :as msg])
+  (:require [reins-compiler.utils.messages :as msg])
   (:gen-class))
+
 (import java.net.Socket)
 (import java.io.DataOutputStream)
 (import java.io.BufferedOutputStream)
 
-(def using-spread false)
 (def using-port true)
 
 (def IP "127.0.0.1")
@@ -42,13 +41,6 @@
   (let [code-list (file->list (first args))
         code (code->string (rest code-list))
         briefcase (make-briefcase (first code-list) code)]
-
-    (when using-spread
-      (let [connection (spread/connect (spread/connection-information "127.0.0.1" 4803 "reins-compiler" false false))
-            grp-execute (spread/join-group "waldo-execute" connection)]
-        (msg/data 'briefcase briefcase)
-        (spread/push connection grp-execute (str briefcase))
-        (spread/disconnect connection)))
 
     (when using-port
       (let [socket (Socket. IP PORT)

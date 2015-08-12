@@ -7,5 +7,4 @@
                  [org.clojure/data.json "0.2.6"]]
   :main ^:skip-aot reins-runtime.core
   :target-path "target/%s"
-  :resource-paths ["resources/spread.jar"]
   :profiles {:uberjar {:aot :all}})

@@ -6,5 +6,4 @@
   :dependencies [[org.clojure/clojure "1.6.0"]]
   :main ^:skip-aot reins-compiler.core
   :target-path "target/%s"
-  :resource-paths ["resources/spread.jar"]
   :profiles {:uberjar {:aot :all}})
