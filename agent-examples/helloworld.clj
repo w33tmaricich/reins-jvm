@@ -1,8 +1,8 @@
-{:config {}
+{:config {:id :test}
  :data {:greeting "Hello, World!"}
- :do-next "do-next"}
+ :do-next "hello-world"}
 
-(defn do-next
+(defn hello-world
   "This function runs as soon as the agent arrives at its destination."
   [briefcase]
   (println (:greeting (:data briefcase))))

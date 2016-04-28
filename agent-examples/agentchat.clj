@@ -4,7 +4,7 @@
 
 {:config {:communication-method "TCP"
           :port 8002}
- :data {:current-location "192.168.1.7"
+ :data {:current-location "172.28.12.45"
         :partner-location "192.168.1.18"
         :message "Welcome to agent chat!\n======================\nStart typing and press enter to send your message!\n"}
  :do-next "chat"}
