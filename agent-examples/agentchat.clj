@@ -2,10 +2,11 @@
 ;;;;
 ;;;; This is a super simple chat client implemented in a mobile agent.
 
-{:config {:communication-method "TCP"
-          :port 8002}
+{:config {:id :test
+          :communication-method "TCP"
+          :port 1612}
  :data {:current-location "172.28.12.45"
-        :partner-location "192.168.1.18"
+        :partner-location "172.28.16.22"
         :message "Welcome to agent chat!\n======================\nStart typing and press enter to send your message!\n"}
  :do-next "chat"}
 

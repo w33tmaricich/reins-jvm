@@ -3,7 +3,8 @@
 ;;;; This agent simpley increments a number and pushes it to the terminal. Once it has printed the number
 ;;;; and waited for two seconds, it then uses spread to jump to another executor.
 
-{:config {:exe-name-spread "exe-1"}
+{:config {:id :test
+          :exe-name-spread "exe-1"}
  :data {:number 1}
  :do-next "increment-counter"}
 

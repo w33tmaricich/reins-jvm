@@ -14,7 +14,7 @@
 (import java.io.BufferedInputStream)
 
 (def using-port true)
-(def debug-mode true)
+(def debug-mode false)
 
 (def id (comp :id :config))
 ;(def retrieve-socket-input (comp DataInputStream. BufferedInputStream. .getInputStream .accept))
